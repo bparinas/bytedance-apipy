@@ -18,11 +18,13 @@ python src/app.py
 ### API endpoint testing (manual w/curl)
 ```
 # Display all events
+
 ex. curl -X GET 'http://<ip>:8000/events'
 ```
 
 ```
 # Successful event registration
+
 ex. curl -X POST 'http://<ip>:8000/events' \
        -H 'Content-Type: application/json' \
        -d '{ "email": "md5@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00" }'
@@ -31,6 +33,7 @@ ex. curl -X POST 'http://<ip>:8000/events' \
 ```
 ```
 # Duplicate email registration is not allowed per event (e.i adding data that already exists)
+
 ex. curl -X POST 'http://<ip>:8000/events' \
      -H 'Content-Type: application/json' \
      -d '{ "email": "uriel@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00" }'
@@ -42,6 +45,7 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 ```
 ```
 # Invalid datetime format
+
 ex. curl -X POST 'http://<ip>:8000/events' \
          -H 'Content-Type: application/json' \
 	 -d '{ "email": "ilia@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00" }'
@@ -55,6 +59,7 @@ ex. curl -X POST 'http://<ip>:8000/events' \
 
 ```
 # Update event registration (i.e. email data)
+
 Email sephy@example.com has an existing event registration record. New email will be used.
 curl -X PUT http://<ip>:8000/events/sephy@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
 
