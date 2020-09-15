@@ -54,5 +54,15 @@ ex. curl -X POST 'http://34.70.25.201:8000/events' \
 ```
 
 ```
+# Update event registration (i.e. email data)
+Email sephy@example.com has an existing event registration record. New email will be used.
+curl -X PUT http://34.70.25.201:8000/events/sephy@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
+
+Email nullx@example.com has no event registration record
+curl -X PUT http://34.70.25.201:8000/events/nullx@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
+{"message": "Email not found."}
+```
+
+```
 **Remove registration by email**
 ```
