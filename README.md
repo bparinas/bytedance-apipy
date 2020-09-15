@@ -4,7 +4,15 @@ git clone https://github.com/bparinas/bytedance-apipy.git
 cd bytedance-apipy
 virtualenv venv --python=python3.7
 source venv/bin/activate
+
+# Install package dependencies
 pip install -r requirements.txt
+
+# Create the events.db sqlite database
+python createdb.py
+
+# Start the program
+python src/app.py
 ```
 
 ### API endpoint testing (manual w/curl)
