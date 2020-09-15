@@ -28,8 +28,8 @@ ex. curl -X POST 'http://<ip>:8000/events' \
        -d '{ "email": "md5@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00" }'
 
 201 {"message": "Congratulations! Your event registration has been successfully processed."}
-
-
+```
+```
 # Duplicate email registration is not allowed per event (e.i adding data that already exists)
 ex. curl -X POST 'http://34.70.25.201:8000/events' \
      -H 'Content-Type: application/json' \
@@ -39,8 +39,8 @@ Log snippets...
 sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: events.email, events.event_name
 [SQL: INSERT INTO events VALUES(?,?,?,?,?)]
 [parameters: ('uriel@example.com', 'Conferences', 'Kyoto', '2020-09-11 09:00:00', '2020-09-11 17:00:00')]
-
-
+```
+```
 # Invalid datetime format
 ex. curl -X POST 'http://34.70.25.201:8000/events' \
          -H 'Content-Type: application/json' \
