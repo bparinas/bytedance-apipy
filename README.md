@@ -31,7 +31,7 @@ ex. curl -X POST 'http://<ip>:8000/events' \
 ```
 ```
 # Duplicate email registration is not allowed per event (e.i adding data that already exists)
-ex. curl -X POST 'http://34.70.25.201:8000/events' \
+ex. curl -X POST 'http://<ip>:8000/events' \
      -H 'Content-Type: application/json' \
      -d '{ "email": "uriel@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00" }'
 	 
@@ -42,12 +42,12 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 ```
 ```
 # Invalid datetime format
-ex. curl -X POST 'http://34.70.25.201:8000/events' \
+ex. curl -X POST 'http://<ip>:8000/events' \
          -H 'Content-Type: application/json' \
 	 -d '{ "email": "ilia@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00" }'
 400 {"message": "POST request has an invalid data, e.g. starttime/endtime must be in YYYY-MM-DD HH:MM:SS"}
 
-    curl -X POST 'http://34.70.25.201:8000/events' \
+    curl -X POST 'http://<ip>:8000/events' \
          -H 'Content-Type: application/json' \
 	 -d '{ "email": "ilia@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00", "endtime": "2020-09-11 17:00" }'
 400 {"message": "POST request has an invalid data, e.g. starttime/endtime must be in YYYY-MM-DD HH:MM:SS"}
@@ -56,13 +56,24 @@ ex. curl -X POST 'http://34.70.25.201:8000/events' \
 ```
 # Update event registration (i.e. email data)
 Email sephy@example.com has an existing event registration record. New email will be used.
-curl -X PUT http://34.70.25.201:8000/events/sephy@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
+curl -X PUT http://<ip>:8000/events/sephy@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
 
 Email nullx@example.com has no event registration record
-curl -X PUT http://34.70.25.201:8000/events/nullx@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
+curl -X PUT http://<ip>:8000/events/nullx@example.com -H 'Content-Type: application/json' -d '{ "email": "ilia@example.com" }'
 {"message": "Email not found."}
 ```
 
 ```
-**Remove registration by email**
+# Remove registration by email
+
+Before DELETE endpoint call
+curl -X GET http://<ip>:8000/events
+[{"email": "sephy@example.com", "event_name": "Birthday", "event_location": "Tokyo", "starttime": "2020-09-09 10:00:00", "endtime": "2020-09-09 12:00:00"}, {"email": "yuna@example.com", "event_name": "Reunion", "event_location": "Osaka", "starttime": "2020-09-10 15:00:00", "endtime": "2020-09-10 21:00:00"}, {"email": "uriel@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00"}, {"email": "md5@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00"}]
+
+Execute DELETE endpoint call
+bernard@restpy:~$ curl -X DELETE http://<ip>:8000/events/uriel@example.com
+
+After DELETE endpoint call (no more uriel)
+curl -X GET http://34.70.25.201:8000/events
+[{"email": "sephy@example.com", "event_name": "Birthday", "event_location": "Tokyo", "starttime": "2020-09-09 10:00:00", "endtime": "2020-09-09 12:00:00"}, {"email": "yuna@example.com", "event_name": "Reunion", "event_location": "Osaka", "starttime": "2020-09-10 15:00:00", "endtime": "2020-09-10 21:00:00"}, {"email": "md5@example.com", "event_name": "Conferences", "event_location": "Kyoto", "starttime": "2020-09-11 09:00:00", "endtime": "2020-09-11 17:00:00"}]
 ```
