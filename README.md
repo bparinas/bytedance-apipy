@@ -1,4 +1,4 @@
-### Howto setup the environment
+### HowTo setup the environment
 ```
 git clone https://github.com/bparinas/bytedance-apipy.git
 cd bytedance-apipy
